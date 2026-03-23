@@ -1,43 +1,42 @@
-List All Articles
-Method: GET
+Blog API Documentation
+Installation
+Run the following command in the project directory:
+npm install express mysql2 body-parser
 
-URL: /api/articles
+Execution
+To start the server:
+node app.js
 
-Optional Filters: /api/articles?categorie=Tech&auteur=John Doe
+Priorities
+Middleware: body-parser must be initialized before routes to process JSON.
 
-Get a Specific Article
-Method: GET
+Validation: The system verifies titre, auteur, and contenu before database insertion.
 
-URL: /api/articles/:id
+Security: All SQL queries use prepared statements (?) to prevent injections.
 
-Example: /api/articles/5
+Database: A stable MySQL connection is required for all CRUD operations.
 
-Search Articles
-Method: GET
+API Endpoints
+Articles
+POST /api/articles : Create an article (Requires: titre, contenu, auteur).
 
-URL: /api/articles/search?query=keyword
+GET /api/articles : List all articles (Supports: ?categorie=, ?auteur=, ?date=).
 
-Note: Searches within both the titre and contenu fields.
+GET /api/articles/:id : Get a single article by ID.
 
-Update an Article
-Method: PUT
+GET /api/articles/search?query=val : Search in title and content.
 
-URL: /api/articles/:id
+PUT /api/articles/:id : Update an existing article.
 
-Request Body (JSON): Provide the updated titre, contenu, categorie, or tags.
+DELETE /api/articles/:id : Delete an article.
 
-Delete an Article
-Method: DELETE
+Status Codes
+201: Success (Created)
 
-URL: /api/articles/:id
+200: Success (OK)
 
-3. Response Status Codes
-201 Created: Article successfully saved.
+400: Client Error (Missing fields)
 
-200 OK: Request processed successfully.
+404: Client Error (ID not found)
 
-400 Bad Request: Missing mandatory fields (titre, contenu, or auteur).
-
-404 Not Found: The article with that ID does not exist.
-
-500 Internal Server Error: Database connection or query error.
+500: Server Error (Database failure)
